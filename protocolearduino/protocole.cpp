@@ -1,10 +1,22 @@
 #include "protocole.h"
 
+uint32_t receiveUint32_t () {
+
+}
+
+void sendUint32_t (uint32_t i) {
+	uint8_t buf[4];
+	//il faut tester si pas dans l'autre sens
+
+}
+
 void Protocole::init() {
+	//ici on veut initilaliser toutes les variables une à une en début de communication
 
 }
 
 void Protocole::receive_speed() {
+	//ici on reçoit la vitesse
 
 }
 
