@@ -106,7 +106,7 @@ substituer à quelque chose qui ne soit pas un événement.
 
     Usage:
     Python3          <- feed   (code 6)--            Arduino
-    Python3          -- data   (code 7)->            Arduino
+    Python3          -- data   (code 7) ou end (code 12) ->            Arduino
                         etc... (voir data)
 
 ## data:
