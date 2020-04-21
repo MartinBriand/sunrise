@@ -1,4 +1,5 @@
 #include <stdint.h>
+#include "arduino.h"
 
 enum CODESEND : uint8_t {
   memoire = 4,
@@ -18,9 +19,11 @@ enum CODERECEIVE : uint8_t {
 
 class Protocole {
 	public:
-		bool isInitialized = false;
 		bool isStarted = false;
-		uint32_t speed;
+    bool data_initialized = false;
+    bool speed_of_iter_initialized = false;
+    bool pos_0_initialized = false;
+		uint32_t speed_of_iter;
 		uint32_t pos_0;
 		uint32_t pos_in_data;
 		int32_t data[][8];
@@ -32,4 +35,5 @@ class Protocole {
 		void start_motors();
 		void send_error();
 		void one_step_motors();
+		bool is_initialized();
 };

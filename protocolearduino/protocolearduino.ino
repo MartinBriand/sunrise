@@ -5,13 +5,6 @@
 uint8_t inByte;
 Protocole p;
 
-void sendUint16_t(uint16_t a) {
-  uint8_t* buf;
-  buf[0] = a/256;
-  buf[1] = a%256;
-  Serial.write(buf, 2);
-}
-
 void setup() {
   Serial.begin(9600);
 }
