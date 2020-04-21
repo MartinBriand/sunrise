@@ -1,4 +1,4 @@
 traj*
 __pycache__
 template.py
-tests.py
+*.pyc
