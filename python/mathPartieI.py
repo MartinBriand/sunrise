@@ -366,10 +366,6 @@ def commande_longeurs_cables(traj_disc, dimensions_mobile, dimensions_hangar):
     qu'il faut réaliser pour parcourir la trajectoire souhaitée) en la liste
     des modifications infinitésimales des longueurs des câbles.
 
-    #################################
-    ##### Plutôt var_disc non ? #####
-    #################################
-
     Pour cela, on doit garder en mémoire (dans des variables locales) la
     position actuelle du module (6 valeurs), ainsi que les longueurs actuelles
     des cordes.
