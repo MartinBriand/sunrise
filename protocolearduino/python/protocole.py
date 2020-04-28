@@ -1,23 +1,53 @@
-import serial
-from time import sleep
+from enum import IntEnum
+import time
 
-ser = serial.Serial('COM3', 9600)
-sleep(3)
-print(ser)
+class CODEARD(IntEnum):
+	FEED = 6,
+	ACK = 10,
+	ERRORARD = 11,  
 
-k = 3
+class CODEPY(IntEnum):
+	INITIAL = 2,
+	SPEED = 3,
+	MEMORY = 4,
+	POS_0 = 5,
+	DATA = 7,
+	STOP = 8,
+	START = 9,
+	ERRORPY = 11,
 
-vector = [300 for i in range (k)]
-print (vector)
-for i in vector:
-	ser.write(int.to_bytes(i, 2, 'big'))
+
+def receiveCode(protocole):
+	start = time.time()
+	while time.time() - start < protocole.MAX_TIME_TO_RECEIVE_A_BYTE:
+		if protocole.serial.in_waiting > 0:
+			a = int.from_bytes(protocole.serial.read(1), byteorder='little')
+			if a in [obj.value for obj in CODEARD]:
+				return CODEARD(a)
+			else:
+				raise ValueError('Received a wrong byte code : ' + a)
+			break
+	raise IOError('Getting code was too long')
 
 
-print('cest envoye')
-print(int.from_bytes(ser.read(2), 'big'))
-# print(int.from_bytes(ser.read(), 'big') == sum(vector))
-# print(ser.in_waiting)
 
-# print('tamere')
+class Protocole:
 
-# for k in range(10):
+
+	def __init__ (self, serial):
+		self.serial = serial
+		self.MAX_TIME_TO_RECEIVE_A_BYTE = 100 #in milliseconds
+
+	def init(self):
+		self.serial.write(int.to_bytes(CODEPY.INITIAL.value, 1, 'big'))
+		#try:
+		code = receiveCode(self)
+		if code != CODEARD.ACK:
+			raise ValueError('Wrong code, received {0} but expected {1}'.format(repr(code), repr(CODEARD.ACK)))
+		#except Exception as e:
+			#print(e)
+			#self.handleException(e)
+
+
+
+

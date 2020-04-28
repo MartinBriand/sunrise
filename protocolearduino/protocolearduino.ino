@@ -7,34 +7,35 @@ Protocole p;
 
 void setup() {
   Serial.begin(9600);
+  pinMode(LED_BUILTIN, OUTPUT);
 }
 
 void loop() {
   if (Serial.available() == 1) {
     inByte = Serial.read();
     switch (inByte) {
-      case CODERECEIVE::INITIAL :
+      case CODEPY::INITIAL :
         p.init();
         break;
-      case CODERECEIVE::SPEED :
+      case CODEPY::SPEED :
         p.receive_speed_of_iter();
         break;
-      case CODERECEIVE::POS_0 :
+      case CODEPY::POS_0 :
         p.receive_pos_0();
         break;
-      case CODERECEIVE::MEMORY :
+      case CODEPY::MEMORY :
         p.send_memory();
         break;
-      case CODERECEIVE::DATA :
+      case CODEPY::DATA :
         p.receive_data();
         break;
-      case CODERECEIVE::STOP :
+      case CODEPY::STOP :
         p.stop_motors();
         break;
-      case CODERECEIVE::START :
+      case CODEPY::START :
         p.start_motors();
         break;
-      case CODERECEIVE::ERRORPY :
+      case CODEPY::ERRORPY :
         p.receive_error();
         break;
       default :

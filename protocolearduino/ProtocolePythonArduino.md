@@ -37,6 +37,10 @@ substituer à quelque chose qui ne soit pas un événement.
             Python3          --vitesse (code 3)->            Arduino
             Python3          --mémoire (code 4)->            Arduino
             Python3          -- pos_0  (code 5)->            Arduino
+            Python3          -- data   (code 7)->            Arduino
+            Python3          -- stop   (code 8)->            Arduino
+            Python3          -- start  (code 9)->            Arduino
+            
 ## Evénements utiles pendant le mouvement
             Python3          <- feed   (code 6)--            Arduino
             Python3          -- data   (code 7)->            Arduino
@@ -83,8 +87,9 @@ substituer à quelque chose qui ne soit pas un événement.
     Python3          --mémoire (code 4)->            Arduino
     Python3          <- xxxx (4 octets)--            Arduino
     Python3          -- xxxx (4 octets)->            Arduino
+    Python3  <-ack (code 10) ou error (code 11) --   Arduino
 
-pos_0:
+## pos_0:
 
     Description: Cet événement précède l'envoi par l'hôte d'un vecteur
     contenant les positions initiales à donner aux moteurs. Cet événement est
@@ -176,7 +181,7 @@ pos_0:
     Python3          <- error (code 11)--            Arduino
     Python3          <- xxxx (4 octets)--            Arduino
     
-    IMPORTANT : Dans un premier temps, on ne renverra qu'un message d'erreur
+    IMPORTANT : Dans un premier temps, seul un message d'erreur pourra être envoyé ou reçu par chacune des deux parties, ce qui aura pour conséquence d'arrêter le protocole.
 
 
 J'ai fait exprès de ne pas assigner le code 0 dans le protocole (il peut

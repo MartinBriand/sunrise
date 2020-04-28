@@ -62,6 +62,10 @@ void Protocole::init() {
   this->memory_initialized = false;
   //ack
   this->send_ack();
+  digitalWrite(LED_BUILTIN, HIGH);   // turn the LED on (HIGH is the voltage level)
+  delay(1000);                       // wait for a second
+  digitalWrite(LED_BUILTIN, LOW);    // turn the LED off by making the voltage LOW
+  delay(1000);
 }
 
 void Protocole::receive_speed_of_iter() {
@@ -70,6 +74,16 @@ void Protocole::receive_speed_of_iter() {
   //ack
   this->speed_of_iter_initialized = true;
   send_uint32_t(this->speed_of_iter, this);
+}
+
+void Protocole::ask_feed() {
+  Serial.write(CODEARD::FEED);
+  int a = receive_byte(this);
+  if (a == CODEPY::DATA) {
+    this->receive_data();
+  } else {
+    this->send_error();
+  }
 }
 
 void Protocole::receive_pos_0() {
@@ -96,17 +110,22 @@ void Protocole::send_memory() {
 }
 
 void Protocole::receive_data() {
-  //receive
-  this->data = new int32_t *[this->max_number_of_instructions];
-  for (int i = 0 ; i < this->max_number_of_instructions; i++) {
-    this->data[i] = new int32_t[8];
+  //check
+  if (this->is_started) {
+    this->send_error();
+  } else {
+    //init
+    this->data = new int32_t *[this->max_number_of_instructions];
+    for (int i = 0 ; i < this->max_number_of_instructions; i++) {
+      this->data[i] = new int32_t[8];
+    }
+    //receive
+    for(int i = 0 ; i < this->max_number_of_instructions; i++) {
+      receive_vector_of_8_int32_t(this->data[i], this);
+    }
+    //ack
+    this->send_ack();
   }
-  
-  for(int i = 0 ; i < this->max_number_of_instructions; i++) {
-    receive_vector_of_8_int32_t(this->data[i], this);
-  }
-  //ack
-  this->send_ack();
 }
 
 void Protocole::receive_error() {
@@ -128,11 +147,11 @@ void Protocole::start_motors() {
 }
 
 void Protocole::send_error() {
-  Serial.write(CODESEND::ERRORARD);
+  Serial.write(CODEARD::ERRORARD);
 }
 
 void Protocole::send_ack() {
-  Serial.write(CODESEND::ACK);
+  Serial.write(CODEARD::ACK);
 }
 
 void Protocole::one_step_motors() {

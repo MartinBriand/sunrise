@@ -2,13 +2,13 @@
 #include "arduino.h"
 #include <Chrono.h>
 
-enum CODESEND : uint8_t {
+enum CODEARD : uint8_t {
   FEED = 6,
   ACK = 10,
   ERRORARD = 11,  
 };
 
-enum CODERECEIVE : uint8_t {
+enum CODEPY : uint8_t {
   INITIAL = 2,
   SPEED = 3,
   MEMORY = 4,
@@ -37,6 +37,7 @@ class Protocole {
 		void receive_pos_0();
 		void receive_data();
     void send_memory();
+    void ask_feed();
 		void stop_motors();
 		void start_motors();
     void send_ack();
