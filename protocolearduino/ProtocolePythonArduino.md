@@ -35,8 +35,12 @@ substituer à quelque chose qui ne soit pas un événement.
 ## Evénements utiles à l'initialisation
             Python3          --initial (code 2)->            Arduino
             Python3          --vitesse (code 3)->            Arduino
-            Python3          <-mémoire (code 4)--            Arduino
+            Python3          --mémoire (code 4)->            Arduino
             Python3          -- pos_0  (code 5)->            Arduino
+            Python3          -- data   (code 7)->            Arduino
+            Python3          -- stop   (code 8)->            Arduino
+            Python3          -- start  (code 9)->            Arduino
+            
 ## Evénements utiles pendant le mouvement
             Python3          <- feed   (code 6)--            Arduino
             Python3          -- data   (code 7)->            Arduino
@@ -53,23 +57,23 @@ substituer à quelque chose qui ne soit pas un événement.
     Description: Cet événement est envoyé de Python3 vers la carte Arduino
     pour initier le protocole. La carte Arduino doit répondre à initial par un
     ACK.
-
+    
     Usage:
     Python3          --initial (code 2)->            Arduino
     Python3          <-  ACK  (code 10)--            Arduino
 
 ## vitesse:
 
-    Description: Cet événement précède l'envoi de le vitesse souhaitée par
-    l'utilisateur pour la simulation. Cette vitesse est envoyée sous la forme
-    d'un entier 32bits (4 octets). La carte Arduino doit répondre à la
-    réception de cette vitesse par un echo (i.e. elle renvoie la valeur reçue
-    à l'hôte Python).
-
-    Usage:
-    Python3          --vitesse (code 3)->            Arduino
-    Python3          -- xxxx (4 octets)->            Arduino
-    Python3          <- xxxx (4 octets)--            Arduino
+	Description: Cet événement précède l'envoi de le vitesse souhaitée par
+	l'utilisateur pour la simulation. Cette vitesse est envoyée sous la forme
+	d'un entier 32bits (4 octets). La carte Arduino doit répondre à la
+	réception de cette vitesse par un echo (i.e. elle renvoie la valeur reçue
+	à l'hôte Python).
+	
+	Usage:
+	Python3          --vitesse (code 3)->            Arduino
+	Python3          -- xxxx (4 octets)->            Arduino
+	Python3          <- xxxx (4 octets)--            Arduino
 
 ## mémoire:
 
@@ -78,11 +82,12 @@ substituer à quelque chose qui ne soit pas un événement.
     fera un appel avec feed. Cet événement est suivi par l'envoi du nombre en
     question sous la forme d'un entier 32bits (4 octets). Le code en Python
     doit répondre à la récéption de ce nombre par un écho.
-
+    
     Usage:
-    Python3          <-mémoire (code 4)--            Arduino
+    Python3          --mémoire (code 4)->            Arduino
     Python3          <- xxxx (4 octets)--            Arduino
     Python3          -- xxxx (4 octets)->            Arduino
+    Python3  <-ack (code 10) ou error (code 11) --   Arduino
 
 ## pos_0:
 
@@ -91,6 +96,7 @@ substituer à quelque chose qui ne soit pas un événement.
     suivi par l'envoi du vecteur en question sous la forme de 8 entiers 32bits
     collés. Le code en Arduino doit répondre à la récéption de ce vecteur par
     un ACK.
+
 
     Usage:
     Python3          -- pos_0  (code 5)->            Arduino
@@ -103,7 +109,7 @@ substituer à quelque chose qui ne soit pas un événement.
     pour lui demander de fournir davantage de vecteurs de mouvement à l'aide
     d'un événement data. L'hôte Python3 doit toujours répondre à un feed par un
     data (ou un stop le cas échéant).
-
+    
     Usage:
     Python3          <- feed   (code 6)--            Arduino
     Python3  -- data   (code 7) ou init (code 2) ->  Arduino
@@ -120,7 +126,7 @@ substituer à quelque chose qui ne soit pas un événement.
     promis sous la forme d'une suite de tableaux de 8 entiers 32bits. Une fois
     le nombre de vecteurs promis reçus, la carte Arduino devra répondre par un
     ACK.
-
+    
     Usage:
     Python3          -- data   (code 7)->            Arduino
     Python3          -- xxxx (4 octets)->            Arduino
@@ -136,7 +142,7 @@ substituer à quelque chose qui ne soit pas un événement.
     cas où l'on ferme la communication, il s'agit sujet de ne plus faire
     avancer les moteurs jusqu'à nouvel ordre. La carte Arduino devra répondre
     à la récéption de cet événement par un ACK.
-
+    
     Usage:
     Python3          -- stop   (code 8)->            Arduino
     Python3          <-  ACK  (code 10)--            Arduino
@@ -147,7 +153,7 @@ substituer à quelque chose qui ne soit pas un événement.
     interrompu par un stop et l'Arduino doit y répondre par un ACK. Notez
     qu'envoyer un start alors que la communication n'a pas été arrêtée par un
     stop constitue une faute de protocole.
-
+    
     Usage:
     Python3          -- start  (code 9)->            Arduino
     Python3          <-  ACK  (code 10)--            Arduino
@@ -170,10 +176,12 @@ substituer à quelque chose qui ne soit pas un événement.
     des parties n'est plus tenue de répondre aux messages de l'autre. La carte
     Arduino doit arrêter ses moteurs après avoir envoyé son code d'erreur à
     l'hôte, et l'hôte doit fermer la connection.
-
+    
     Usage:
     Python3          <- error (code 11)--            Arduino
     Python3          <- xxxx (4 octets)--            Arduino
+    
+    IMPORTANT : Dans un premier temps, seul un message d'erreur pourra être envoyé ou reçu par chacune des deux parties, ce qui aura pour conséquence d'arrêter le protocole.
 
 
 J'ai fait exprès de ne pas assigner le code 0 dans le protocole (il peut
