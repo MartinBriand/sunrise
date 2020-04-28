@@ -1,11 +1,27 @@
 #include "protocole.h"
 
 // for this see this page -> https://www.tutorialspoint.com/cplusplus/cpp_this_pointer.htm
+//test function
+void blink_n_times(int n) {
+  for (int k = 0; k < n ; k++) {
+    digitalWrite(LED_BUILTIN, HIGH);   // turn the LED on (HIGH is the voltage level)
+    delay(1000);                       // wait for a second
+    digitalWrite(LED_BUILTIN, LOW);    // turn the LED off by making the voltage LOW
+    delay(1000);
+  }
+}
+
 
 //general functions
+void emptyBytesStack () {
+  while (Serial.available()) {
+    Serial.read();
+  }
+}
+
 void send_uint32_t(uint32_t a, Protocole *p) { //be careful, reading small digits first
   uint32_t acopy = a;
-  uint8_t* buf;
+  uint8_t buf[4];
   for (int i = 0; i<4; i++) {
     buf[i] = acopy%256;
     acopy = acopy/256;
@@ -62,13 +78,11 @@ void Protocole::init() {
   this->memory_initialized = false;
   //ack
   this->send_ack();
-  digitalWrite(LED_BUILTIN, HIGH);   // turn the LED on (HIGH is the voltage level)
-  delay(1000);                       // wait for a second
-  digitalWrite(LED_BUILTIN, LOW);    // turn the LED off by making the voltage LOW
-  delay(1000);
 }
 
 void Protocole::receive_speed_of_iter() {
+  //first ack
+  this->send_ack();
   //receive
   this->speed_of_iter = receive_uint32_t (this);
   //ack
@@ -96,10 +110,12 @@ void Protocole::receive_pos_0() {
 
 void Protocole::send_memory() {
   //send
-  send_uint32_t(this->max_number_of_instructions, this);
+  
+  send_uint32_t(this->memory, this);
+  
   //check
   uint32_t check = receive_uint32_t(this);
-  if (check == this->max_number_of_instructions) {
+  if (check == this->memory) {
     //ack
     this->memory_initialized = true;
     this->send_ack();
@@ -115,12 +131,12 @@ void Protocole::receive_data() {
     this->send_error();
   } else {
     //init
-    this->data = new int32_t *[this->max_number_of_instructions];
-    for (int i = 0 ; i < this->max_number_of_instructions; i++) {
+    this->data = new int32_t *[this->memory];
+    for (int i = 0 ; i < this->memory; i++) {
       this->data[i] = new int32_t[8];
     }
     //receive
-    for(int i = 0 ; i < this->max_number_of_instructions; i++) {
+    for(int i = 0 ; i < this->memory; i++) {
       receive_vector_of_8_int32_t(this->data[i], this);
     }
     //ack
@@ -129,7 +145,8 @@ void Protocole::receive_data() {
 }
 
 void Protocole::receive_error() {
-  this->init();
+  this->is_started = false;
+  emptyBytesStack();
 }
 
 void Protocole::stop_motors() {
@@ -138,7 +155,7 @@ void Protocole::stop_motors() {
 }
 
 void Protocole::start_motors() {
-  if (this->is_initialized()) {
+  if (true) {//this->is_initialized()) {
     this->is_started = true;
     this->send_ack();
   } else {
@@ -148,6 +165,7 @@ void Protocole::start_motors() {
 
 void Protocole::send_error() {
   Serial.write(CODEARD::ERRORARD);
+  emptyBytesStack();
 }
 
 void Protocole::send_ack() {
@@ -157,6 +175,10 @@ void Protocole::send_ack() {
 void Protocole::one_step_motors() {
   //Cette fonction doit: faire tourner les moteurs d'un pas en vérifiant que l'écecution se fait bien dans les temps donnés pas la vitesse
   //Elle doit ensuite incrémenter le pointeur. si les données sont complètes, faire appelle à feed
+  digitalWrite(LED_BUILTIN, HIGH);   // turn the LED on (HIGH is the voltage level)
+  delay(200);                       // wait for a second
+  digitalWrite(LED_BUILTIN, LOW);    // turn the LED off by making the voltage LOW
+  delay(200);
 
 }
   

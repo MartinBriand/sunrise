@@ -40,7 +40,7 @@ substituer à quelque chose qui ne soit pas un événement.
             Python3          -- data   (code 7)->            Arduino
             Python3          -- stop   (code 8)->            Arduino
             Python3          -- start  (code 9)->            Arduino
-            
+
 ## Evénements utiles pendant le mouvement
             Python3          <- feed   (code 6)--            Arduino
             Python3          -- data   (code 7)->            Arduino
@@ -72,6 +72,7 @@ substituer à quelque chose qui ne soit pas un événement.
 	
 	Usage:
 	Python3          --vitesse (code 3)->            Arduino
+	Python3          <-  ACK  (code 10)--            Arduino
 	Python3          -- xxxx (4 octets)->            Arduino
 	Python3          <- xxxx (4 octets)--            Arduino
 

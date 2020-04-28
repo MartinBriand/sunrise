@@ -27,7 +27,7 @@ class Protocole {
     bool speed_of_iter_initialized = false;
     bool pos_0_initialized = false;
     bool memory_initialized = false;
-    uint32_t max_number_of_instructions = 5;
+    uint32_t memory = 5;
 		uint32_t speed_of_iter;
 		int32_t pos_0[8];
 		uint32_t pos_in_data;

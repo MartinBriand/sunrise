@@ -24,6 +24,7 @@ void loop() {
         p.receive_pos_0();
         break;
       case CODEPY::MEMORY :
+
         p.send_memory();
         break;
       case CODEPY::DATA :
