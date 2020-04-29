@@ -1,0 +1,347 @@
+[33mcommit 75ba4546df0738d916c22f7788fd96b935575ff9[m[33m ([m[1;36mHEAD -> [m[1;32mMartin20200428[m[33m, [m[1;31morigin/Martin20200428[m[33m)[m
+Author: MartinB <martin.briand23@gmail.com>
+Date:   Tue Apr 28 19:52:33 2020 +0200
+
+    python protocole started
+
+[33mcommit 8b608cf9ca552792d9cfce6413a702f186fcb5dd[m
+Author: MartinB <martin.briand23@gmail.com>
+Date:   Tue Apr 28 17:35:36 2020 +0200
+
+    All protocole implemeted i Arduino
+
+[33mcommit 253ba5d10ce63a39663bb12e89b79c5e993a0d95[m[33m ([m[1;31morigin/Init[m[33m, [m[1;32mInit[m[33m)[m
+Author: MartinB <martin.briand23@gmail.com>
+Date:   Tue Apr 21 21:11:44 2020 +0200
+
+    deleted an unused file
+
+[33mcommit 1866d04f580eefa9db650d7718b3a9620d086a42[m
+Merge: 840ae30 6a26268
+Author: MartinB <martin.briand23@gmail.com>
+Date:   Tue Apr 21 21:09:49 2020 +0200
+
+    Resolved conflicts with master
+
+[33mcommit 6a2626817d0c63069dcf7e5684290edf81bdd7dd[m[33m ([m[1;31morigin/master[m[33m, [m[1;31morigin/HEAD[m[33m, [m[1;32mmaster[m[33m)[m
+Author: MartinB <martin.briand23@gmail.com>
+Date:   Tue Apr 21 19:51:33 2020 +0200
+
+    moved Protocole.md
+
+[33mcommit 840ae30e5ca4a7ad3a1fb0fb13b45e6754e51ae6[m
+Author: MartinB <martin.briand23@gmail.com>
+Date:   Tue Apr 21 19:30:27 2020 +0200
+
+    Init done on arduino
+
+[33mcommit ca8d7edce389d0e2a2142ee22af974b7b673ccba[m
+Author: MartinBriand <45079118+MartinBriand@users.noreply.github.com>
+Date:   Tue Apr 21 19:28:56 2020 +0200
+
+    Update ProtocolePythonArduino.md
+
+[33mcommit ce1ef7ddda6cd3c436724171b20869ef84b97987[m
+Merge: 705f560 1eb454a
+Author: MartinBriand <45079118+MartinBriand@users.noreply.github.com>
+Date:   Tue Apr 21 19:12:22 2020 +0200
+
+    Merge pull request #1 from MartinBriand/patch-1
+    
+    Patch 1
+
+[33mcommit 1eb454a18c66af0b189a4adc2e4ac8a857a345f4[m[33m ([m[1;31morigin/patch-1[m[33m)[m
+Author: MartinBriand <45079118+MartinBriand@users.noreply.github.com>
+Date:   Tue Apr 21 19:05:40 2020 +0200
+
+    Update ProtocolePythonArduino.md
+
+[33mcommit 705f5603f3400e8e4a9404a6c0ed32b76b754c5a[m
+Author: MartinB <martin.briand23@gmail.com>
+Date:   Tue Apr 21 18:20:49 2020 +0200
+
+    Added some functions
+
+[33mcommit 285ca48327314edcb0ac2356b16377d9bc887611[m
+Author: MartinB <martin.briand23@gmail.com>
+Date:   Tue Apr 21 17:24:42 2020 +0200
+
+    Adding protocole interface for python
+
+[33mcommit 347a1cfbdd064dbe6dd3e20cd106fd9e698e5945[m
+Author: roadelou <roadelou@delltbr>
+Date:   Wed Apr 8 19:24:01 2020 +0200
+
+    Renamed AK to the ASCII ACK
+
+[33mcommit 3ebcde9e168dddec94d3b7bc9abe9069da1c56a2[m
+Author: roadelou <roadelou@delltbr>
+Date:   Wed Apr 8 18:51:42 2020 +0200
+
+    Small mistake remaining
+
+[33mcommit e10e87cd6ffc9a641812f432a581bd55a94f92e7[m
+Author: roadelou <roadelou@delltbr>
+Date:   Wed Apr 8 18:46:57 2020 +0200
+
+    Corrected a style fault
+
+[33mcommit a02760a876506b6136eb2ab2dcb481bf86d730f0[m
+Author: roadelou <roadelou@delltbr>
+Date:   Wed Apr 8 18:46:00 2020 +0200
+
+    Formatted the protocol file
+
+[33mcommit a9baf8dbfbe5308337a3a80db5ffaa1ea8d10321[m
+Author: roadelou <roadelou@delltbr>
+Date:   Wed Apr 8 18:41:59 2020 +0200
+
+    Corrected md file style
+
+[33mcommit ac63d2a769e11d7f2d9e5921fb94e8c783011947[m
+Author: roadelou <roadelou@delltbr>
+Date:   Wed Apr 8 18:39:52 2020 +0200
+
+    Added description for the Python - Arduino communication
+
+[33mcommit 7bb8d5dedff2e1547f26f204f7b862c55ccc9da7[m
+Author: roadelou <roadelou@delltbr>
+Date:   Tue Apr 7 12:27:46 2020 +0200
+
+    Formatting last code changes
+
+[33mcommit f1ad3f5aabfb23b31de9132a289d7f5c2a290a89[m
+Author: roadelou <roadelou@delltbr>
+Date:   Tue Apr 7 12:22:23 2020 +0200
+
+    Added implementation for Serial.readBytes
+
+[33mcommit 59ccb53fde265dbac2d03f733e7aca5c4f9ae921[m
+Author: roadelou <roadelou@wintbr>
+Date:   Sun Apr 5 13:54:58 2020 +0200
+
+    Corrected some bug and poor use of delete in the original code
+
+[33mcommit 11df0119c615a9bfa06cd9285b564c22d64ef08c[m
+Author: roadelou <roadelou@delltbr>
+Date:   Fri Apr 3 12:15:10 2020 +0200
+
+    Added a bare bone arduino emulator to help the Arduino team work from home during Coronavirus containment
+
+[33mcommit 9bb7900b4f72cbb99563205428dc7b0f5b846e9f[m
+Merge: fc72f1c 0f93125
+Author: 18tbr <57146545+18tbr@users.noreply.github.com>
+Date:   Sun Mar 22 13:51:23 2020 +0100
+
+    Merge pull request #2 from theodumont/master
+    
+    Pics: motor numbering
+
+[33mcommit fc72f1ca6f57666a2b13d1af139ca1ac9c02fb5d[m
+Author: roadelou <roadelou@delltbr>
+Date:   Thu Mar 19 15:00:10 2020 +0100
+
+    Added example with compilation of multiple files at once
+
+[33mcommit e9a680dbc95484c53f2af53311fccb9869ddf3be[m
+Author: roadelou <roadelou@delltbr>
+Date:   Thu Mar 19 14:44:14 2020 +0100
+
+    Solved an issue with the arduino IDE by moving a file
+
+[33mcommit 5324ab63c02e22779c60d8ad28a92f2467d43961[m
+Author: roadelou <roadelou@delltbr>
+Date:   Thu Mar 19 14:25:43 2020 +0100
+
+    Création du dossier pour le groupe arduino avec l'archive de l'an dernier
+
+[33mcommit 0f93125d3c5485bf116757ddbc7380d9a15b4ab2[m
+Author: Théo Dumont <theo.dumont@mines-paristech.fr>
+Date:   Wed Mar 18 18:38:18 2020 +0100
+
+    Typo
+
+[33mcommit b548f93387b6cf71a2bde2e96acd97e2d5e1dfc4[m
+Author: Théo Dumont <theo.dumont@mines-paristech.fr>
+Date:   Wed Mar 18 18:33:47 2020 +0100
+
+    README
+
+[33mcommit b407bd078a5ab2c2ccc09a31cf317c0cd5d54ef6[m
+Author: Théo Dumont <theo.dumont@mines-paristech.fr>
+Date:   Wed Mar 18 18:24:52 2020 +0100
+
+    Structured modules
+
+[33mcommit c15bcd0a000cb454516ff3c805d477f849faa5f1[m
+Author: Théo Dumont <theo.dumont@mines-paristech.fr>
+Date:   Wed Mar 18 18:10:23 2020 +0100
+
+    Finalized trajectory discretization
+
+[33mcommit bb97bf2023d860fad98b88ca15d81e7ee560d2ae[m
+Author: Théo Dumont <theo.dumont@mines-paristech.fr>
+Date:   Wed Mar 18 17:34:03 2020 +0100
+
+    Protected class attributes over modification
+
+[33mcommit 6ff84da746f4b1657ad4f643667426615331ffe9[m
+Author: Théo Dumont <theo.dumont@mines-paristech.fr>
+Date:   Wed Mar 18 16:50:48 2020 +0100
+
+    Use of classes for 3d objects and coordinates
+
+[33mcommit f388fb1e0644692d39de7737799dba3e74068454[m
+Author: Théo Dumont <theo.dumont@mines-paristech.fr>
+Date:   Wed Mar 18 15:49:15 2020 +0100
+
+    Discrete trajectory
+
+[33mcommit c89ee93fcb51c9e3c39a239343458cf0b4d10efe[m
+Author: Théo Dumont <theo.dumont@mines-paristech.fr>
+Date:   Tue Mar 17 19:26:09 2020 +0100
+
+    README: howto
+
+[33mcommit 98aee2befc110013360836d008e4401a05f57d49[m
+Merge: 29c665f daa3d61
+Author: Théo Dumont <theo.dumont@mines-paristech.fr>
+Date:   Tue Mar 17 19:19:35 2020 +0100
+
+    Merge branch 'classes'
+
+[33mcommit daa3d6191e76f6ab2bb8321cbf6f0db330190f8a[m
+Author: Théo Dumont <theo.dumont@mines-paristech.fr>
+Date:   Tue Mar 17 19:13:36 2020 +0100
+
+    README: howto
+
+[33mcommit f620838073f03671e82b3e253be0e30992b88a9d[m
+Author: Théo Dumont <theo.dumont@mines-paristech.fr>
+Date:   Mon Mar 16 12:07:27 2020 +0100
+
+    Created empty tests with unittest
+
+[33mcommit a51787ef59220ef33ea32ae92d4baf9352099b09[m
+Author: Théo Dumont <theo.dumont@mines-paristech.fr>
+Date:   Mon Mar 16 11:01:10 2020 +0100
+
+    Cleaner rad conversion
+
+[33mcommit 987ecc0b6c34e8786f2ce39b30d3c5381230fd95[m
+Author: Théo Dumont <theo.dumont@mines-paristech.fr>
+Date:   Sun Mar 15 22:42:37 2020 +0100
+
+    Time elapsed calculation
+
+[33mcommit 7e548919ecfc8b94f64289bc9d56cfacfdea1cc8[m
+Author: Théo Dumont <theo.dumont@mines-paristech.fr>
+Date:   Sun Mar 15 19:00:01 2020 +0100
+
+    Deleted test decorator
+
+[33mcommit 34009c8cb37e8f1b8334c6b2786a1bec4380b2fd[m
+Author: Théo Dumont <theo.dumont@mines-paristech.fr>
+Date:   Sun Mar 15 18:58:54 2020 +0100
+
+    Decorators: compute time and control type
+
+[33mcommit ee93d44e639cab97167471144419c1e3ba73f1e0[m
+Author: Théo Dumont <theo.dumont@mines-paristech.fr>
+Date:   Sun Mar 15 18:25:17 2020 +0100
+
+    Class heritage
+
+[33mcommit 4d0ec07d8d0719a8bfee0e3fd745e097e459325a[m
+Author: Théo Dumont <theo.dumont@mines-paristech.fr>
+Date:   Sun Mar 15 18:17:56 2020 +0100
+
+    Reading only access for Trajectory
+
+[33mcommit e65890ca9f611d12d73bfd152eaf1804f663bcd1[m
+Author: Théo Dumont <theo.dumont@mines-paristech.fr>
+Date:   Sun Mar 15 00:33:26 2020 +0100
+
+    Class trajectory docstring and cleaningg
+
+[33mcommit 7193b64eb35964ca126b29046191e5c583dc0c89[m
+Author: Théo Dumont <theo.dumont@mines-paristech.fr>
+Date:   Sun Mar 15 00:18:27 2020 +0100
+
+    Class Trajectoire
+
+[33mcommit 2c6920c7fcfd24ee3f1c88723bccbad2d67a3ba7[m
+Author: Théo Dumont <theo.dumont@mines-paristech.fr>
+Date:   Fri Mar 13 00:55:12 2020 +0100
+
+    discretisation_trajectoire.py
+
+[33mcommit 34f6abc9080e206c0ffe8f891e57e333fcc0df30[m
+Author: Théo Dumont <theo.dumont@mines-paristech.fr>
+Date:   Fri Mar 13 00:37:33 2020 +0100
+
+    calcul_pas_adapte
+
+[33mcommit b236996f8ad5e1d1760ec4d71d4bba29223c36e7[m
+Author: Théo Dumont <theo.dumont@mines-paristech.fr>
+Date:   Thu Mar 12 23:56:19 2020 +0100
+
+    Wanted trajectory plotting
+
+[33mcommit 29c665f2c5d004b6fe8fbbfee7878dc55a2b9ff3[m
+Author: Théo Dumont <theo.dumont@mines-paristech.fr>
+Date:   Wed Mar 11 19:36:53 2020 +0100
+
+    Pics: motor numbering
+
+[33mcommit bdaa56871983f578ae480507e65a60673d3327d8[m
+Author: Théo Dumont <theo.dumont@mines-paristech.fr>
+Date:   Tue Mar 10 18:03:54 2020 +0100
+
+    Trajectory display
+
+[33mcommit 07df09d1607370a87d1195efb7c7c2aa73d6e351[m
+Author: Théo Dumont <theo.dumont@mines-paristech.fr>
+Date:   Tue Mar 10 17:56:05 2020 +0100
+
+    Display of the variables
+
+[33mcommit fbc0e70945ad28c8109a87087a58ed4f956028cb[m
+Author: Théo Dumont <theo.dumont@mines-paristech.fr>
+Date:   Tue Mar 10 17:31:17 2020 +0100
+
+    Modules: functions and classes with docstring;
+    main: initialization
+
+[33mcommit a2c5231a3673990edab5fc2304629b99c29fdc45[m
+Merge: 2c8df88 0204db0
+Author: 18tbr <57146545+18tbr@users.noreply.github.com>
+Date:   Tue Mar 10 15:41:14 2020 +0100
+
+    Merge pull request #1 from theodumont/master
+    
+    Imported the groupeMath repo
+
+[33mcommit 2093f8f00aecd5feea8d300bee6a77e4451466ad[m
+Author: Théo Dumont <theo.dumont@mines-paristech.fr>
+Date:   Tue Mar 10 15:02:05 2020 +0100
+
+    Imported the classes branch of the groupeMath repo
+
+[33mcommit 0204db0c46effe720d5abe7fb1eae7f8aba45ead[m
+Author: Théo Dumont <theo.dumont@mines-paristech.fr>
+Date:   Tue Mar 10 15:00:50 2020 +0100
+
+    Imported the groupeMath repo
+
+[33mcommit 2c8df8870a8452dd1db6b83436ba1566a0a9b465[m
+Author: roadelou <roadelou@delltbr>
+Date:   Tue Mar 10 13:55:30 2020 +0100
+
+    Updated README with contribution instructions
+
+[33mcommit bc23597d9ef707ca601f5c3481941b68d0867f81[m
+Author: 18tbr <57146545+18tbr@users.noreply.github.com>
+Date:   Tue Mar 10 13:45:38 2020 +0100
+
+    Initial commit

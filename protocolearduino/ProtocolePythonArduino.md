@@ -101,6 +101,7 @@ substituer à quelque chose qui ne soit pas un événement.
 
     Usage:
     Python3          -- pos_0  (code 5)->            Arduino
+    Python3          <-  ACK  (code 10)--            Arduino
     Python3          -- XXXXXXXX  (vec)->            Arduino
     Python3          <-  ACK  (code 10)--            Arduino
 
@@ -113,7 +114,7 @@ substituer à quelque chose qui ne soit pas un événement.
     
     Usage:
     Python3          <- feed   (code 6)--            Arduino
-    Python3  -- data   (code 7) ou init (code 2) ->  Arduino
+    Python3  -- data   (code 7) ou stop (code 8) ->  Arduino
                         etc... (voir data)
 
 ## data:

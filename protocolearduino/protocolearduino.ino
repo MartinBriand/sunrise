@@ -31,10 +31,10 @@ void loop() {
         p.receive_data();
         break;
       case CODEPY::STOP :
-        p.stop_motors();
+        p.receive_stop();
         break;
       case CODEPY::START :
-        p.start_motors();
+        p.receive_start();
         break;
       case CODEPY::ERRORPY :
         p.receive_error();
