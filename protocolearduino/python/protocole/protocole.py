@@ -43,10 +43,11 @@ class Protocole:
 		self._is_check_thread_alive = False
 		self.serial.close() #enough time to close the connection
 		sleep(3)
+		print('Protocole is closed')
 		return True
 
 	def change_values(self, **new_values):
-		self.close()
+		self.stop_and_close()
 		previous_values = {'speed_of_iter': self.speed_of_iter, 'pos_0':self.pos_0, 'data':self.data}
 		for kw in new_values:
 			if kw not in previous_values:
