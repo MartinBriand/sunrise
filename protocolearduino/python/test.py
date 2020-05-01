@@ -26,5 +26,3 @@ protocole.setup()
 protocole.start()
 sleep(3)
 protocole.stop_and_close()
-
-
