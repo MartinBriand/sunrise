@@ -40,10 +40,10 @@ void loop() {
         p.receive_error();
         break;
       default :
-        p.send_error();
+        p.send_error(ERRORARDCODE::WRONG_INSTRUCTION);
     }
   } else if (Serial.available() > 1) {
-    p.send_error();
+    p.send_error(ERRORARDCODE::TOO_MANY_INSTRUCTIONS);
   } else if (p.is_started) {
     p.one_step_motors();
   }
