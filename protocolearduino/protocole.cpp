@@ -5,9 +5,9 @@
 void blink_n_times(int n) {
   for (int k = 0; k < n ; k++) {
     digitalWrite(LED_BUILTIN, HIGH);   // turn the LED on (HIGH is the voltage level)
-    delay(300);                       // wait for a second
+    delay(100);                       // wait for a second
     digitalWrite(LED_BUILTIN, LOW);    // turn the LED off by making the voltage LOW
-    delay(300);
+    delay(100);
   }
 }
 
@@ -34,37 +34,41 @@ void send_uint32_t(uint32_t a, Protocole *p) { //be careful, reading small digit
   Serial.write(buf, 4);
 }
 
-uint8_t receive_byte(Protocole *p) { //read one byte from stream
-  uint8_t a;
+bool receive_byte(uint8_t *i, Protocole *p) { //read one byte from stream
   Chrono chrono;
   chrono.restart();
   while ( chrono.elapsed() < p->MAX_TIME_TO_RECEIVE_A_BYTE) {
     if (Serial.available()){
-      a = Serial.read();
-      return a;
+      *i = Serial.read();
+      return true;
     }
   }
-  p->send_error();
+  p->send_error(ERRORARDCODE::BYTE_TIMEOUT);
+  return false;
 }
 
-uint32_t receive_uint32_t(Protocole *p) { //reading big digits first
+bool receive_uint32_t(uint32_t *i, Protocole *p) { //reading big digits first
   uint32_t a = 0;
+  uint8_t my_byte;
   for(int i = 0; i<4; i++) {
     a*=256;
-    a+=receive_byte(p);
+    if (!receive_byte(&my_byte, p)) {return false;}
+    a+=my_byte;
   }
-  return a;
+  *i = a;
+  return true;
 }
 
-int32_t receive_int32_t(Protocole *p) {
-  int64_t a = receive_uint32_t(p);
-  int32_t b = a-2147483648;
-  return b;
+bool receive_int32_t(int32_t *i, Protocole *p) {
+  uint32_t my_uint32_t;
+  bool res = receive_uint32_t(&my_uint32_t, p);
+  if (res) {*i = my_uint32_t-2147483648;}
+  return res;
 }
 
 bool receive_vector_of_8_int32_t (int32_t vector[], Protocole *p) {
   for (int i = 0; i<8; i++) {
-    vector[i] = receive_int32_t(p);
+    if (!receive_int32_t(&vector[i], p)) {return false;};
   }
   return true;
 }
@@ -95,22 +99,26 @@ bool Protocole::receive_speed_of_iter() {
   //first ack
   this->send_ack();
   //receive
-  this->speed_of_iter = receive_uint32_t (this);
+  bool res = receive_uint32_t (&this->speed_of_iter, this);
   //ack
-  this->speed_of_iter_initialized = true;
-  send_uint32_t(this->speed_of_iter, this);
-  return true;
+  if (res) {
+    this->speed_of_iter_initialized = true;
+    send_uint32_t(this->speed_of_iter, this);
+  }
+  return res;
 }
 
 bool Protocole::receive_pos_0() {
   // first ack
   this->send_ack();
   //receive
-  receive_vector_of_8_int32_t(this->pos_0, this);
+  bool res = receive_vector_of_8_int32_t(this->pos_0, this);
   // second ack
-  this->pos_0_initialized = true;
-  this->send_ack();
-  return true;
+  if (res) {
+    this->pos_0_initialized = true;
+    this->send_ack();
+  }
+  return res;
 }
 
 bool Protocole::send_memory() {
@@ -119,28 +127,30 @@ bool Protocole::send_memory() {
   send_uint32_t(this->memory, this);
   
   //check
-  uint32_t check = receive_uint32_t(this);
-  if (check == this->memory) {
+  uint32_t check;
+  bool res = receive_uint32_t(&check, this);
+  if (res && check == this->memory) {
     //ack
     this->memory_initialized = true;
     this->send_ack();
     return true;
-  } else {
+  } else if (res) {//no need to raise error when res is false because error already raised before
     //error
-    this->send_error();
+    this->send_error(ERRORARDCODE::RECEIVED_WRONG_MEMORY);
     return false;
   }
 }
 
 bool Protocole::ask_feed() {
   Serial.write(CODEARD::FEED);
-  int a = receive_byte(this);
-  if (a == CODEPY::DATA) {
+  uint8_t a;
+  bool res = receive_byte(&a, this);
+  if (res && a == CODEPY::DATA) {
     return this->receive_data();
   } else if (a == CODEPY::STOP) {
     this->receive_stop();
   } else {
-    this->send_error();
+    this->send_error(ERRORARDCODE::ASK_FEED_BAD_ANSWER);
   }
   return false;
 }
@@ -182,7 +192,7 @@ bool Protocole::receive_start() {
     this->send_ack();
     return this->is_started;
   } else {
-    this->send_error();
+    this->send_error(ERRORARDCODE::START_WITHOUT_INITIALIZATION);
     return false;
   }
 }
@@ -193,13 +203,13 @@ bool Protocole::send_ack() {
 }
 
 bool Protocole::receive_error() {
-  this->is_started = false;
   reset_Protocole(this);
   return true;
 }
 
-bool Protocole::send_error() {
+bool Protocole::send_error(ERRORARDCODE e) {
   Serial.write(CODEARD::ERRORARD);
+  Serial.write(e);
   reset_Protocole(this);
   return true;
 }
@@ -214,11 +224,11 @@ bool Protocole::one_step_motors() {
     this->ask_feed();
     return false;
   } else {
-//    for(int k = 0; k<8; k++) {
-//      blink_n_times(this->data[this->pos_in_data][k]);
-//      delay(200);
-//    }
-//    delay(1000);
+    for(int k = 0; k<8; k++) {
+      blink_n_times(this->data[this->pos_in_data][k]);
+      delay(200);
+    }
+    delay(1000);
     this->pos_in_data += 1;
     return true;
   }
