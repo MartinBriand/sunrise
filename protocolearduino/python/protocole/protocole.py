@@ -10,22 +10,22 @@ import serial
 class Protocole:
 #Be careful !! We send data with big bytes first and receive them with little bytes first
 
-	def __init__ (self, serial_port, serial_baudrate, speed, pos_0, data):
+	def __init__ (self, serial_port, serial_baudrate, speed_of_iter, pos_0, data):
 		self.serial = serial.Serial('COM4', 9600)
 		sleep(3)
-		self.MAX_TIME_TO_RECEIVE_A_BYTE = 10 #in seconds
-		self.memory_initialized = False
-		self.speed_of_iter_initialized = False
-		self.pos_0_inititialized = False
-		self.pos_0 = pos_0
+		self._MAX_TIME_TO_RECEIVE_A_BYTE = 10 #in seconds
+		self._memory_initialized = False
+		self._speed_of_iter_initialized = False
+		self._pos_0_inititialized = False
+		self._pos_0 = pos_0
 		self.is_started = False
-		self.speed_of_iter = speed
-		self.data = data
-		self.pos_in_data = 0
+		self._speed_of_iter = speed_of_iter
+		self._data = data
+		self._pos_in_data = 0
 
 		#threads
-		self.thread_lock = threading.Lock()
-		self.check_thread = threading.Thread(name = 'check', target = self._check_feed_or_error)
+		self._thread_lock = threading.Lock()
+		self._check_thread = threading.Thread(name = 'check', target = self._check_feed_or_error)
 		self._is_check_thread_alive = True
 		#reset
 
@@ -48,14 +48,14 @@ class Protocole:
 
 	def change_values(self, **new_values):
 		self.stop_and_close()
-		previous_values = {'speed_of_iter': self.speed_of_iter, 'pos_0':self.pos_0, 'data':self.data}
+		previous_values = {'speed_of_iter': self._speed_of_iter, 'pos_0':self._pos_0, 'data':self._data}
 		for kw in new_values:
 			if kw not in previous_values:
 				raise ValueError('Kwargs must be speed_of_iter, pos_0 or data, {0} is not accepted'.format(kw))
 		previous_values.update(new_values)
-		self.speed_of_iter = previous_values['speed_of_iter']
-		self.pos_0 = previous_values['pos_0']
-		self.data = previous_values['data']
+		self._speed_of_iter = previous_values['speed_of_iter']
+		self._pos_0 = previous_values['pos_0']
+		self._data = previous_values['data']
 		print ('Values successfully changed')
 		return True
 	
@@ -63,7 +63,7 @@ class Protocole:
 	def _check_feed_or_error (self):
 		from time import time, sleep
 		while True:
-			self.thread_lock.acquire()
+			self._thread_lock.acquire()
 			if self.serial.in_waiting > 0:
 				code = receive_code(protocole = self, timeout = False)
 				if code == CODEARD.FEED:
@@ -74,7 +74,7 @@ class Protocole:
 					raise IOError('Received ack in wrong thread from Arduino')
 				elif code == CODEARD.ERRORARD:
 					self._handle_arduino_exception()
-			self.thread_lock.release()
+			self._thread_lock.release()
 			if(not self._is_check_thread_alive):
 				break
 
@@ -85,8 +85,8 @@ class Protocole:
 			self._send_pos_0() and
 			self._send_speed()
 			)
-		self.check_thread.start()
 		self._is_check_thread_alive = True
+		self._check_thread.start()
 		if res:
 			print("Setup successfully finished")
 		return res
@@ -94,7 +94,7 @@ class Protocole:
 	
 
 	def _init(self): #works well (tested)
-		self.__init__(self.serial.port, self.serial.baudrate, self.speed_of_iter, self.pos_0, self.data)
+		self.__init__(self.serial.port, self.serial.baudrate, self._speed_of_iter, self._pos_0, self._data)
 		#protocole
 		self.serial.write(int.to_bytes(CODEPY.INITIAL.value, 1, 'big'))
 		#check
@@ -109,14 +109,14 @@ class Protocole:
 		#first ack
 		receive_specific_code(self, CODEARD.ACK)
 		#value
-		self.serial.write(int.to_bytes(self.speed_of_iter, 4, 'big'))
+		self.serial.write(int.to_bytes(self._speed_of_iter, 4, 'big'))
 		#check
 		received = receive_uint32_t(self)
-		if received != self.speed_of_iter:
+		if received != self._speed_of_iter:
 			self._send_error()
-			raise ValueError('Wrong speed, received {0}, but expected {1}'.format(received, self.speed_of_iter))
-		self.speed_of_iter_initialized = True
-		print("Speed successfully sent")	
+			raise ValueError('Wrong speed_of_iter, received {0}, but expected {1}'.format(received, self._speed_of_iter))
+		self._speed_of_iter_initialized = True
+		print("Speed_of_iter successfully sent")	
 		return True
 
 	def _ask_memory(self): #works well (tested)
@@ -127,7 +127,7 @@ class Protocole:
 		self.serial.write(int.to_bytes(received, 4, 'big'))
 		receive_specific_code(self, CODEARD.ACK)
 		self.memory = received
-		self.memory_initialized = True
+		self._memory_initialized = True
 		print("Memory successfully received : {0}".format(self.memory))
 		return True
 
@@ -138,10 +138,10 @@ class Protocole:
 		#first ack
 		receive_specific_code(self, CODEARD.ACK)
 		#send
-		send_vector_of_8_int32_t(self, self.pos_0)
+		send_vector_of_8_int32_t(self, self._pos_0)
 		#second ack
 		receive_specific_code(self, CODEARD.ACK)
-		self.pos_0_inititialized = True
+		self._pos_0_inititialized = True
 		print('Pos_0 successfully sent')
 		return True
 
@@ -154,23 +154,23 @@ class Protocole:
 		#send
 		#create data first
 		data_to_send = np.zeros((self.memory, 8), dtype = 'int32')
-		for k in range(min(self.memory, len(self.data) - self.pos_in_data)):
-			data_to_send[k] = self.data[self.pos_in_data + k]
+		for k in range(min(self.memory, len(self._data) - self._pos_in_data)):
+			data_to_send[k] = self._data[self._pos_in_data + k]
 		#send data
 		for k in range(len(data_to_send)):
 			send_vector_of_8_int32_t(self, data_to_send[k])
 
 		#second ack
 		receive_specific_code(self, CODEARD.ACK)
-		self.pos_in_data += self.memory
+		self._pos_in_data += self.memory
 		print("Data successfully sent :")
 		print(data_to_send)
 
 
 	def stop(self):
-		self.thread_lock.acquire()
+		self._thread_lock.acquire()
 		res = self._stop()
-		self.thread_lock.release()
+		self._thread_lock.release()
 		sleep(0.5)#to let time to the ckeck feed to get messages
 		return res
 
@@ -185,20 +185,20 @@ class Protocole:
 
 	def start(self):
 		"""returns true if has started and false if a stop blocked the demand"""
-		self.thread_lock.acquire()
+		self._thread_lock.acquire()
 		res = self._start()
-		self.thread_lock.release()
+		self._thread_lock.release()
 		sleep(0.5) # to let time to the check feed to get messages
 		return res
 
 	def _start(self): #works well (tested)
 		""""""
 		#check
-		if not self.memory_initialized:
+		if not self._memory_initialized:
 			raise ValueError("Memory not initialized")
-		elif not self.pos_0_inititialized:
+		elif not self._pos_0_inititialized:
 			raise ValueError('pos_0 not initialized')
-		elif not self.speed_of_iter_initialized:
+		elif not self._speed_of_iter_initialized:
 			raise ValueError('speed_of_iter not initialized')
 		#protocole
 		self.serial.write(int.to_bytes(CODEPY.START.value, 1, 'big'))
@@ -226,13 +226,13 @@ class Protocole:
 		#protocole
 		"Sending an Error"
 		self.close()
-		self.__init__(self.serial.port, self.serial.baudrate, self.speed_of_iter, self.pos_0, self.data)
+		self.__init__(self.serial.port, self.serial.baudrate, self._speed_of_iter, self._pos_0, self._data)
 		self.serial.write(int.to_bytes(CODEPY.ERRORPY.value, 1, 'big'))
 		sleep(2) #to let enough time to the Arduino board to empty the stack of received bytes (bytes sent by python)
 
 
 	def _handle_feed_demand(self):
-		if self.pos_in_data >= len(self.data):
+		if self._pos_in_data >= len(self._data):
 			self._stop()
 		else:
 			self._send_data();

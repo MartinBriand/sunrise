@@ -6,7 +6,7 @@ import numpy as np
 def receive_error_code(protocole, timeout = True):
 	"""receive a code and return it if there is no error"""
 	if timeout:
-		protocole.serial.timeout = protocole.MAX_TIME_TO_RECEIVE_A_BYTE
+		protocole.serial.timeout = protocole._MAX_TIME_TO_RECEIVE_A_BYTE
 	else:
 		protocole.serial.timeout = None
 
@@ -25,7 +25,7 @@ def receive_error_code(protocole, timeout = True):
 def receive_code(protocole, timeout = True):
 	"""receive a code and return it if there is no error"""
 	if timeout:
-		protocole.serial.timeout = protocole.MAX_TIME_TO_RECEIVE_A_BYTE
+		protocole.serial.timeout = protocole._MAX_TIME_TO_RECEIVE_A_BYTE
 	else:
 		protocole.serial.timeout = None
 
@@ -53,7 +53,7 @@ def receive_specific_code(protocole, code, timeout = True):
 
 
 def receive_uint32_t(protocole):
-	protocole.serial.timeout = 4* protocole.MAX_TIME_TO_RECEIVE_A_BYTE
+	protocole.serial.timeout = 4* protocole._MAX_TIME_TO_RECEIVE_A_BYTE
 	b = protocole.serial.read(4)
 	if len(b) == 4:
 		return int.from_bytes(b, byteorder='little')
